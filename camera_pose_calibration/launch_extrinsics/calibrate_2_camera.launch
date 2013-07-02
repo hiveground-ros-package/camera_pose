@@ -1,9 +1,11 @@
 <launch>
   <arg name="camera1_ns" default="camera_a/rgb" />
   <arg name="camera2_ns" default="camera_b/rgb" />
-  <arg name="checker_rows" default="4"/>
-  <arg name="checker_cols" default="5"/>
-  <arg name="checker_size" default="0.0245"/>
+  <arg name="camera1_reverse" default="False" />
+  <arg name="camera2_reverse" default="True" />
+  <arg name="checker_rows" default="6"/>  
+  <arg name="checker_cols" default="8"/>
+  <arg name="checker_size" default="0.04"/>
   <arg name="headless" default="false" />
 
   <!-- checkerboard detector for each camera -->
@@ -34,7 +36,7 @@
 
   <!-- generate robot measurements -->
   <node pkg="camera_pose_calibration" type="multicam_capture_exec.py" name="capture_exec" 
-        args="$(arg camera1_ns) $(arg camera2_ns)" output="screen">
+        args="$(arg camera1_ns) $(arg camera2_ns) $(arg camera1_reverse) $(arg camera2_reverse)" output="screen">
     <param name="cam_info_topic" value="camera_info" />
     <remap from="request_interval" to="interval_filtered" />
   </node>
@@ -43,13 +45,15 @@
   <!-- optimize camera poses -->
   <node type="run_optimization_online.py" pkg="camera_pose_calibration" name="cal_optimizer" output="screen"/>
 
-
-  <!-- Visualization -->
+    
+  <!-- Visualization -->  
   <node type="capture_monitor.py" pkg="camera_pose_calibration" name="capture_monitor" output="screen"
         args="$(arg camera1_ns) $(arg camera2_ns)" />
 
-  <node unless="$(arg headless)" type="image_view" pkg="image_view" name="aggregated_image_viewer" >
+    
+  <!--node unless="$(arg headless)" type="image_view" pkg="image_view" name="aggregated_image_viewer" >
      <remap from="image" to="aggregated_image" />
-  </node>
+  </node-->
+  
 
 </launch>

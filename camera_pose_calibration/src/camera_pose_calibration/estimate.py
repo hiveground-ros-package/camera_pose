@@ -147,7 +147,7 @@ def calculate_residual_and_jacobian(cal_samples, cur_estimate):
     # Loop over each observation
     for cur_sample, target_pose_msg, target_index in zip(cal_samples, cur_estimate.targets, range(len(cur_estimate.targets))):
         for cam_measurement in cur_sample.M_cam:
-            # Find the index of this camera
+            # Find the index of this camera            
             try:
                 cam_pose = cam_pose_dict[cam_measurement.camera_id]
                 cam_index     = cam_index_dict[cam_measurement.camera_id]

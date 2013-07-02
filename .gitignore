@@ -1,0 +1,19 @@
+# Temporary files
+*~
+.cproject
+.project
+.pydevproject
+build/
+catkin/
+catkin_generated/
+CATKIN_IGNORE
+msg_gen/
+srv_gen/
+bin/
+lib/
+gtest/
+devel/
+cmake_install.cmake
+test_results/
+*.pyc
+

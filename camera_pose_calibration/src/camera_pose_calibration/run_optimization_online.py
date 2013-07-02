@@ -214,6 +214,7 @@ class Estimator:
             res.camera_id = [camera.camera_id for camera in self.state.cameras]
             res.time_stamp = [timestamp for timestamp in self.timestamps]  #copy
             res.m_count = len(res.time_stamp); #  self.measurement_count
+            print res
             self.pub.publish(res)
 
 
