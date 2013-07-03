@@ -50,7 +50,7 @@ from sensor_msgs.msg import CameraInfo, Image
 class CameraCaptureExecutive:
     def __init__(self, cam_ids):
         self.cam_ids = cam_ids[:len(cam_ids)/2]
-        self.cam_ivs = cam_ids[len(cam_ids)/2:]
+        self.cam_rev = cam_ids[len(cam_ids)/2:]
         self.cache = RobotMeasurementCache()
         self.lock = threading.Lock()
 
@@ -96,10 +96,9 @@ class CameraCaptureExecutive:
                     cam.camera_id = cam.cam_info.header.frame_id
                     m_robot.header.stamp = cam.cam_info.header.stamp      
 #                 m_robot.M_cam[1].features.object_points = m_robot.M_cam[1].features.object_points[::-1]
-                for i in range(len(self.cam_ivs)):
-                    if self.cam_ivs[i] == "True": 
-                        m_robot.M_cam[i].features.image_points = m_robot.M_cam[i].features.image_points[::-1]
-                print "aaaa"                                                         
+                for i in range(len(self.cam_rev)):
+                    if self.cam_rev[i] == "True": 
+                        m_robot.M_cam[i].features.image_points = m_robot.M_cam[i].features.image_points[::-1]                                                                         
                 self.measurement_pub.publish(m_robot)
             else:
                 print "Couldn't get measurement in interval"
